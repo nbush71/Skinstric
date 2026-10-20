@@ -1,4 +1,13 @@
+'use client';
+
+import { useState } from "react";
+
 const MainHeading = () => {
+  const [isDiscoverHovered, setIsDiscoverHovered] = useState(false);
+  const [isDiscoverSelected, setIsDiscoverSelected] = useState(false);
+  const [isTakeTestHovered, setIsTakeTestHovered] = useState(false);
+  const isDiscoverActive = isDiscoverHovered || isDiscoverSelected;
+
   return (
     <div className="w-full h-full max-sm:origin-center max-sm:p-6 items-center justify-center bg-zinc-50 dark:bg-black">
       <div className="relative flex w-full h-full flex-col items-center justify-center">
@@ -10,7 +19,16 @@ const MainHeading = () => {
         </div>
 
         {/* Main heading content */}
-        <div id="main-heading-inner" className="relative z-10 text-center">
+        <div
+          id="main-heading-inner"
+          className={`relative z-10 text-center transition-transform duration-700 ease-in-out ${
+            isTakeTestHovered
+              ? "xl:-translate-x-[18vw] xl:text-left"
+              : isDiscoverActive
+              ? "xl:translate-x-[18vw] xl:text-right"
+              : ""
+          }`}
+        >
           <div className="text-[42px] sm:text-[60px] xl:text-[100px] text-brand-text-dark font-inter font-normal tracking-tighter leading-none">
             Sophisticated
             <br />
@@ -36,17 +54,24 @@ const MainHeading = () => {
 
         {/* Right section */}
         <div className="hidden xl:block absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64">
-          <div className="pointer-events-none absolute -right-16 top-1/2 h-[520px] w-[520px] translate-x-1/2 -translate-y-1/2 rotate-45 border border-dotted border-brand-border"></div>
+          {!isDiscoverActive && (
+            <div className="pointer-events-none absolute -right-16 top-1/2 h-[520px] w-[520px] translate-x-1/2 -translate-y-1/2 rotate-45 border border-dotted border-brand-border"></div>
+          )}
 
-          <a
-            href="/testing"
-            className="absolute left-0 top-1/2 z-10 flex -translate-y-1/2 items-center gap-4 whitespace-nowrap text-sm"
-          >
-            <span>TAKE TEST</span>
-            <span className="flex h-8 w-8 rotate-45 items-center justify-center border border-black">
-              <span className="-rotate-45">▶</span>
-            </span>
-          </a>
+          {!isDiscoverActive && (
+            <a
+              href="/testing"
+              onMouseEnter={() => setIsTakeTestHovered(true)}
+              onMouseLeave={() => setIsTakeTestHovered(false)}
+              onClick={() => setIsTakeTestHovered(true)}
+              className="absolute left-0 top-1/2 z-10 flex -translate-y-1/2 items-center gap-4 whitespace-nowrap text-sm"
+            >
+              <span>TAKE TEST</span>
+              <span className="flex h-8 w-8 rotate-45 items-center justify-center border border-black">
+                <span className="-rotate-45">▶</span>
+              </span>
+            </a>
+          )}
         </div>
         <div className="relative z-10 mt-4 xl:hidden">
           <a
@@ -66,17 +91,25 @@ const MainHeading = () => {
           className="hidden xl:block absolute left-0 top-1/2 -translate-y-1/2 w-64 h-64"
         >
           <div className="relative w-full h-full">
-            <div className="pointer-events-none absolute -left-16 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rotate-45 border border-dotted border-brand-border"></div>
-            <button
-              id="discover-button"
-              className="group inline-flex items-center justify-center gap-4 whitespace-nowrap rounded-md text-sm font-normal text-brand-text-dark transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring cursor-pointer disabled:opacity-50 h-9 absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/5 xl:translate-x-1/6 [@media(width&gt;=1920px)]:translate-x-1/20 px-3 py-1"
-            >
-              <div className="w-7.5 h-7.5 border border-solid border-black rotate-45 cursor-pointer group-hover:scale-110 duration-300"></div>
-              <span className="absolute left-4.5 top-2 scale-[0.9] rotate-180 group-hover:scale-105 duration-300">
-                ▶
-              </span>
-              <span>DISCOVER A.I.</span>
-            </button>
+            {!isTakeTestHovered && (
+              <>
+                <div className="pointer-events-none absolute -left-16 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rotate-45 border border-dotted border-brand-border"></div>
+                <button
+                  id="discover-button"
+                  aria-pressed={isDiscoverSelected}
+                  onMouseEnter={() => setIsDiscoverHovered(true)}
+                  onMouseLeave={() => setIsDiscoverHovered(false)}
+                  onClick={() => setIsDiscoverSelected((selected) => !selected)}
+                  className="group inline-flex items-center justify-center gap-4 whitespace-nowrap rounded-md text-sm font-normal text-brand-text-dark transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring cursor-pointer disabled:opacity-50 h-9 absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/5 xl:translate-x-1/6 [@media(width&gt;=1920px)]:translate-x-1/20 px-3 py-1"
+                >
+                  <div className="w-7.5 h-7.5 border border-solid border-black rotate-45 cursor-pointer group-hover:scale-110 duration-300"></div>
+                  <span className="absolute left-4.5 top-2 scale-[0.9] rotate-180 group-hover:scale-105 duration-300">
+                    ▶
+                  </span>
+                  <span>DISCOVER A.I.</span>
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>

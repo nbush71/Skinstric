@@ -1,5 +1,6 @@
 import Header from "../src/components/Header";
 import MainHeading from "../src/components/MainHeading";
+import "../app/globals.css";
 
 export default function Home() {
   return (

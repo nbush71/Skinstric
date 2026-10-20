@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
-import "./globals.css";
+import "../app/globals.css";
+
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
