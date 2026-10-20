@@ -3,13 +3,14 @@ import MainHeading from "../src/components/MainHeading";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-none flex-col items-center justify-start bg-zinc-50 pt-8 dark:bg-black sm:items-start">
-        <header className="w-full px-4 sm:px-16">
-          <Header />
-        </header>
+    <main className="flex h-dvh flex-col bg-zinc-50">
+      <header className="w-full shrink-0 px-4 py-6 sm:px-16">
+        <Header />
+      </header>
+
+      <section className="w-full min-h-0 flex-1 overflow-x-hidden">
         <MainHeading />
-      </main>
-    </div>
+      </section>
+    </main>
   );
 }
