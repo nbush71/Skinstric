@@ -1,11 +1,10 @@
 import Header from "../src/components/Header";
 import MainHeading from "../src/components/MainHeading";
-import "../app/globals.css";
 
 export default function Home() {
   return (
-    <main className="flex h-dvh flex-col bg-zinc-50">
-      <header className="w-full shrink-0 px-4 py-6 sm:px-16">
+    <main className="relative flex h-dvh flex-col bg-background">
+      <header className="w-full shrink-0 px-4 py-6 sm:px-6">
         <Header />
       </header>
 

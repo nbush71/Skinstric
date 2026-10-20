@@ -2,7 +2,7 @@
 
 
 :root {
-  --background: #ffffff;
+  --background: #f9f9f9;
   --foreground: #171717;
 }
 
@@ -11,13 +11,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-roobert-trial);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
@@ -31,6 +24,98 @@ body {
   --color-brand-bg-Buttons: #1A1B1C;
   --color-brand-text-dark: #1A1B1C;
   --color-brand-text-light: #FCFCFC;
+  --color-brand-input-text: #8c8d8d;
   --color-brand-foreground-text: #1a1b1c83;
   --color-brand-border: #A0A4AB;
+}
+
+
+.diamond {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 2px dotted rgba(120, 120, 120, 0.45);
+  transform-origin: center;
+}
+
+.diamond-outer {
+  width: min(62vw, 60dvh, 540px);
+  height: min(62vw, 60dvh, 540px);
+  opacity: 0.4;
+  animation: spinOuter 26.67s linear infinite;
+}
+
+.diamond-middle {
+  width: min(54vw, 52dvh, 470px);
+  height: min(54vw, 52dvh, 470px);
+  opacity: 0.65;
+  animation: spinMiddle 22.22s linear infinite;
+}
+
+.diamond-inner {
+  width: min(46vw, 44dvh, 400px);
+  height: min(46vw, 44dvh, 400px);
+  opacity: 0.9;
+  animation: spinInner 17.78s linear infinite;
+}
+
+@keyframes spinOuter {
+  from {
+    transform: translate(-50%, -50%) rotate(8deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(368deg);
+  }
+}
+
+@keyframes spinMiddle {
+  from {
+    transform: translate(-50%, -50%) rotate(28deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(388deg);
+  }
+}
+
+@keyframes spinInner {
+  from {
+    transform: translate(-50%, -50%) rotate(22deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(382deg);
+  }
+}
+
+@media (min-width: 640px) {
+  .diamond-outer {
+    width: min(66vw, 64dvh, 762px);
+    height: min(66vw, 64dvh, 762px);
+  }
+
+  .diamond-middle {
+    width: min(58vw, 56dvh, 682px);
+    height: min(58vw, 56dvh, 682px);
+  }
+
+  .diamond-inner {
+    width: min(50vw, 48dvh, 602px);
+    height: min(50vw, 48dvh, 602px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .diamond-outer {
+    width: min(68vw, 68dvh, 762px);
+    height: min(68vw, 68dvh, 762px);
+  }
+
+  .diamond-middle {
+    width: min(60vw, 60dvh, 682px);
+    height: min(60vw, 60dvh, 682px);
+  }
+
+  .diamond-inner {
+    width: min(52vw, 52dvh, 602px);
+    height: min(52vw, 52dvh, 602px);
+  }
 }

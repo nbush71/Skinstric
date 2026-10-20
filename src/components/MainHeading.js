@@ -9,7 +9,7 @@ const MainHeading = () => {
   const isDiscoverActive = isDiscoverHovered || isDiscoverSelected;
 
   return (
-    <div className="w-full h-full max-sm:origin-center max-sm:p-6 items-center justify-center bg-zinc-50 dark:bg-black">
+    <div className="w-full h-full max-sm:origin-center max-sm:p-6 items-center justify-center bg-background">
       <div className="relative flex w-full h-full flex-col items-center justify-center">
         <div className="absolute inset-0 flex items-center justify-center xl:hidden">
           <div className="w-[85vw] h-[85vw] sm:w-96 sm:h-96 rotate-45 border border-dotted border-brand-border"></div>
@@ -23,7 +23,7 @@ const MainHeading = () => {
           id="main-heading-inner"
           className={`relative z-10 text-center transition-transform duration-700 ease-in-out ${
             isTakeTestHovered
-              ? "xl:-translate-x-[18vw] xl:text-left"
+              ? "xl:translate-x-[-18vw] xl:text-left"
               : isDiscoverActive
               ? "xl:translate-x-[18vw] xl:text-right"
               : ""
@@ -55,12 +55,12 @@ const MainHeading = () => {
         {/* Right section */}
         <div className="hidden xl:block absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64">
           {!isDiscoverActive && (
-            <div className="pointer-events-none absolute -right-16 top-1/2 h-[520px] w-[520px] translate-x-1/2 -translate-y-1/2 rotate-45 border border-dotted border-brand-border"></div>
+            <div className="pointer-events-none absolute -right-16 top-1/2 h-130 w-130 translate-x-1/2 -translate-y-1/2 rotate-45 border border-dotted border-brand-border"></div>
           )}
 
           {!isDiscoverActive && (
             <a
-              href="/testing"
+              href="/Testing"
               onMouseEnter={() => setIsTakeTestHovered(true)}
               onMouseLeave={() => setIsTakeTestHovered(false)}
               onClick={() => setIsTakeTestHovered(true)}
@@ -73,14 +73,14 @@ const MainHeading = () => {
             </a>
           )}
         </div>
-        <div className="relative z-10 mt-4 xl:hidden">
+        <div className="relative z-10 mt-4 flex justify-center xl:hidden">
           <a
-            href="/testing"
-            className="inline-flex items-center gap-2 text-xs font-bold"
+            href="/Testing"
+            className="inline-flex min-h-11 items-center justify-center gap-2 whitespace-nowrap px-3 text-xs font-bold"
           >
             <span>ENTER EXPERIENCE</span>
 
-            <span className="flex h-5 w-5 rotate-45 items-center justify-center border border-black">
+            <span className="flex h-5 w-5 shrink-0 rotate-45 items-center justify-center border border-black">
               <span className="-rotate-45 text-[9px] leading-none">▶</span>
             </span>
           </a>
@@ -93,7 +93,7 @@ const MainHeading = () => {
           <div className="relative w-full h-full">
             {!isTakeTestHovered && (
               <>
-                <div className="pointer-events-none absolute -left-16 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rotate-45 border border-dotted border-brand-border"></div>
+                <div className="pointer-events-none absolute -left-16 top-1/2 h-130 w-130 -translate-x-1/2 -translate-y-1/2 rotate-45 border border-dotted border-brand-border"></div>
                 <button
                   id="discover-button"
                   aria-pressed={isDiscoverSelected}

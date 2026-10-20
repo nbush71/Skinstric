@@ -1,11 +1,10 @@
-import Header from "../src/components/Header";
-import Testing from "../src/components/Testing";
-import "../app/globals.css";
+import Header from "../../src/components/Header";
+import Testing from "../../src/components/Testing";
 
 export default function Home() {
   return (
-    <main className="flex h-dvh flex-col bg-zinc-50">
-      <header className="w-full shrink-0 px-4 py-6 sm:px-16">
+    <main className="relative h-[calc(100dvh-100px)] overflow-hidden bg-background">
+      <header className="w-full shrink-0 px-4 py-6 sm:px-6">
         <Header />
       </header>
 
