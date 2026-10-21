@@ -32,7 +32,7 @@ const Result = () => {
   const [actualAttributes, setActualAttributes] = useState({});
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showAnalysisSuccess, setShowAnalysisSuccess] = useState(false);
-  const [isCameraPromptOpen, setIsCameraPromptOpen] = useState(false);
+  const [permissionPrompt, setPermissionPrompt] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
@@ -228,34 +228,35 @@ const Result = () => {
         onChange={handleImageChange}
       />
 
-      {isCameraPromptOpen && (
+      {permissionPrompt && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 px-4"
           onClick={(event) => {
             if (event.target === event.currentTarget) {
-              setIsCameraPromptOpen(false);
+              setPermissionPrompt(null);
             }
           }}
         >
           <div
             role="dialog"
             aria-modal="true"
-            aria-labelledby="camera-permission-title"
+            aria-labelledby="permission-prompt-title"
             className="w-full max-w-[350px] border border-white/20 bg-[#1A1B1C] opacity-95 text-white shadow-2xl"
           >
             <div className="relative flex min-h-[87px] items-center px-4 py-5">
               <p
-                id="camera-permission-title"
+                id="permission-prompt-title"
                 className="pr-10 text-sm font-semibold uppercase tracking-wide"
               >
-                Allow A.I. to access your camera
+                {permissionPrompt === "camera"
+                  ? "Allow A.I. to access your camera"
+                  : "Allow A.I. to access your gallery"}
               </p>
-              
             </div>
             <div className="flex h-10 justify-end border-t border-white/40">
               <button
                 type="button"
-                onClick={() => setIsCameraPromptOpen(false)}
+                onClick={() => setPermissionPrompt(null)}
                 className="px-5 text-xs font-medium text-white/70 transition-colors hover:bg-white/10 hover:text-white"
               >
                 DENY
@@ -263,8 +264,10 @@ const Result = () => {
               <button
                 type="button"
                 onClick={() => {
-                  setIsCameraPromptOpen(false);
-                  document.getElementById("camera-image")?.click();
+                  const inputId =
+                    permissionPrompt === "camera" ? "camera-image" : "gallery-image";
+                  setPermissionPrompt(null);
+                  document.getElementById(inputId)?.click();
                 }}
                 className="px-5 text-xs font-semibold transition-colors hover:bg-white/10"
               >
@@ -304,7 +307,7 @@ const Result = () => {
               </div>
               <button
                 type="button"
-                onClick={() => document.getElementById("gallery-image")?.click()}
+                onClick={() => setPermissionPrompt("gallery")}
                 className="border border-[#1A1B1C] px-4 py-2 text-sm font-semibold"
               >
                 Choose another image
@@ -363,7 +366,7 @@ const Result = () => {
             </div>
             <button
               type="button"
-              onClick={() => setIsCameraPromptOpen(true)}
+              onClick={() => setPermissionPrompt("camera")}
               aria-label="Take or select a photo to scan your face"
               className="group relative z-10 flex h-[136px] w-[136px] scale-[0.75] items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-bg-Buttons sm:scale-100"
             >
@@ -396,7 +399,7 @@ const Result = () => {
             </div>
             <button
               type="button"
-              onClick={() => document.getElementById("gallery-image")?.click()}
+              onClick={() => setPermissionPrompt("gallery")}
               aria-label="Choose a photo from your gallery"
               className="group relative z-10 flex h-[136px] w-[136px] scale-[0.75] items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-bg-Buttons sm:scale-100"
             >
