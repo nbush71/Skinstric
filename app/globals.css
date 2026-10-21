@@ -59,6 +59,21 @@ body {
   animation: spinInner 17.78s linear infinite;
 }
 
+.result-diamond-stage .diamond-outer {
+  width: 100%;
+  height: 100%;
+}
+
+.result-diamond-stage .diamond-middle {
+  width: 86%;
+  height: 86%;
+}
+
+.result-diamond-stage .diamond-inner {
+  width: 72%;
+  height: 72%;
+}
+
 @keyframes spinOuter {
   from {
     transform: translate(-50%, -50%) rotate(8deg);
