@@ -1,8 +1,9 @@
 
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import gallery from "../assets/gallery.svg";
 import scanCallout from "../assets/Group 39690.svg";
 import shutter from "../assets/shutter.svg";
@@ -24,13 +25,24 @@ const isDistribution = (value) =>
   );
 
 const Result = () => {
+  const router = useRouter();
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const [analysis, setAnalysis] = useState(null);
   const [actualAttributes, setActualAttributes] = useState({});
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [showAnalysisSuccess, setShowAnalysisSuccess] = useState(false);
   const [isCameraPromptOpen, setIsCameraPromptOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    if (!showAnalysisSuccess) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => router.push("/Select"), 1800);
+    return () => window.clearTimeout(timeoutId);
+  }, [router, showAnalysisSuccess]);
 
   const handleImageChange = async (event) => {
     const file = event.target.files?.[0];
@@ -44,6 +56,11 @@ const Result = () => {
       setErrorMessage("Please choose a valid image.");
       return;
     }
+
+    setIsAnalyzing(true);
+    setErrorMessage("");
+    setAnalysis(null);
+    setShowAnalysisSuccess(false);
 
     try {
       const dataUrl = await new Promise((resolve, reject) => {
@@ -65,10 +82,10 @@ const Result = () => {
 
       setImage(base64Image);
       setImagePreview(dataUrl);
-      setAnalysis(null);
       setActualAttributes({});
-      setErrorMessage("");
+      await handleAnalyze(base64Image);
     } catch (error) {
+      setIsAnalyzing(false);
       setErrorMessage(
         error instanceof Error
           ? error.message
@@ -77,8 +94,8 @@ const Result = () => {
     }
   };
 
-  const handleAnalyze = async () => {
-    if (!image || isAnalyzing) {
+  const handleAnalyze = async (imageToAnalyze = image) => {
+    if (!imageToAnalyze || isAnalyzing) {
       return;
     }
 
@@ -91,7 +108,7 @@ const Result = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ Image: image }),
+        body: JSON.stringify({ Image: imageToAnalyze }),
       });
 
       let result;
@@ -120,6 +137,7 @@ const Result = () => {
       }
 
       setAnalysis({ message: result.message, data });
+      setShowAnalysisSuccess(true);
     } catch (error) {
       setErrorMessage(
         error instanceof Error
@@ -176,10 +194,6 @@ const Result = () => {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-background">
-      {/* Top heading */}
-      <div className="absolute top-2 left-12 z-20">
-        <p className="text-xs font-semibold">TO START ANALYSIS</p>
-      </div>
       <div className="fixed bottom-8 left-8 z-20">
         <a href="/Testing" aria-label="Back" className="group flex items-center gap-6">
           <div className="flex h-12 w-12 rotate-45 items-center justify-center border border-[#1A1B1C] transition-transform duration-300 group-hover:scale-110">
@@ -190,7 +204,7 @@ const Result = () => {
         </a>
       </div>
       <div className="fixed hidden bottom-8 right-8 z-20">
-        <a href="/select" aria-label="Proceed" className="group flex items-center gap-6">
+        <a href="/Select" aria-label="Proceed" className="group flex items-center gap-6">
           <span className="text-sm font-semibold">PROCEED</span>
           <div className="flex h-12 w-12 rotate-45 items-center justify-center border border-[#1A1B1C] transition-transform duration-300 group-hover:scale-110">
             <span className="-rotate-45 text-xs">▶</span>
@@ -261,7 +275,24 @@ const Result = () => {
         </div>
       )}
 
-      {analysis ? (
+      {isAnalyzing ? (
+        <section
+          aria-label="Preparing analysis"
+          aria-live="polite"
+          className="absolute inset-0 z-10 flex items-center justify-center bg-background"
+        >
+          <div className="result-diamond-stage relative flex h-[min(76vw,64dvh,460px)] w-[min(76vw,64dvh,460px)] items-center justify-center">
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+              <div className="diamond diamond-outer" />
+              <div className="diamond diamond-middle" />
+              <div className="diamond diamond-inner" />
+            </div>
+            <p className="relative z-10 px-4 text-center text-sm font-semibold tracking-wide">
+              PREPARING YOUR ANALYSIS
+            </p>
+          </div>
+        </section>
+      ) : analysis ? (
         <section className="absolute inset-x-4 top-20 bottom-24 z-10 overflow-y-auto bg-background px-4 py-3 md:inset-x-16 md:top-24 md:bottom-24 md:px-8">
           <div className="mx-auto max-w-5xl">
             <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
@@ -334,14 +365,15 @@ const Result = () => {
               type="button"
               onClick={() => setIsCameraPromptOpen(true)}
               aria-label="Take or select a photo to scan your face"
-              className="relative z-10 flex h-[136px] w-[136px] scale-[0.75] items-center justify-center rounded-full border-2 border-brand-bg-Buttons sm:scale-100"
+              className="group relative z-10 flex h-[136px] w-[136px] scale-[0.75] items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-bg-Buttons sm:scale-100"
             >
+              <span className="absolute inset-0 rounded-full border-2 border-brand-bg-Buttons transition-transform duration-300 ease-in-out group-hover:scale-105 group-active:scale-95" />
               <Image
                 src={shutter}
                 alt=""
-                className="h-[116px] w-[116px] rounded-full border-4 bg-brand-bg-Buttons"
+                className="h-[116px] w-[116px] rounded-full border-4 bg-brand-bg-Buttons transition-transform duration-300 ease-in-out group-hover:scale-105 group-active:scale-95"
               />
-              <div className="absolute left-[105px] top-[-46px] h-[60px] w-[67px]">
+              <div className="pointer-events-none absolute left-[117px] top-[-38px] h-[60px] w-[67px]">
                 <Image
                   src={scanCallout}
                   alt=""
@@ -349,7 +381,7 @@ const Result = () => {
                   className="hidden h-full w-full md:block"
                 />
               </div>
-              <span className="absolute bottom-[-52px] left-[-80px] w-36 text-left text-[16px] font-medium leading-tight tracking-wide md:bottom-auto md:left-[180px] md:top-[-60px]">
+              <span className="absolute bottom-[-52px] left-[-80px] w-44 text-left text-[16px] font-medium leading-tight tracking-wide md:bottom-auto md:left-[188px] md:top-[-52px]">
                 ALLOW A.I.
                 <br />
                 TO SCAN YOUR FACE
@@ -366,14 +398,15 @@ const Result = () => {
               type="button"
               onClick={() => document.getElementById("gallery-image")?.click()}
               aria-label="Choose a photo from your gallery"
-              className="relative z-10 flex h-[136px] w-[136px] scale-[0.75] items-center justify-center rounded-full border-2 border-brand-bg-Buttons sm:scale-100"
+              className="group relative z-10 flex h-[136px] w-[136px] scale-[0.75] items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-bg-Buttons sm:scale-100"
             >
+              <span className="absolute inset-0 rounded-full border-2 border-brand-bg-Buttons transition-transform duration-300 ease-in-out group-hover:scale-105 group-active:scale-95" />
               <Image
                 src={gallery}
                 alt=""
-                className="h-[116px] w-[116px]"
+                className="h-[116px] w-[116px] transition-transform duration-300 ease-in-out group-hover:scale-105 group-active:scale-95"
               />
-              <div className="absolute left-[-37px] top-[114px] h-[60px] w-[67px]">
+              <div className="pointer-events-none absolute left-[-39px] top-[119px] h-[60px] w-[67px]">
                 <Image
                   src={scanCallout}
                   alt=""
@@ -381,14 +414,14 @@ const Result = () => {
                   className="hidden h-full w-full rotate-180 md:block"
                 />
               </div>
-              <span className="absolute bottom-[-60px] right-[-26px] w-40 text-right text-[16px] font-medium leading-tight tracking-wide md:bottom-[-80px] md:right-[168px]">
+              <span className="absolute bottom-[-60px] right-[-26px] w-40 text-right text-[16px] font-medium leading-tight tracking-wide md:bottom-[-84px] md:right-[174px]">
                 ALLOW A.I.
                 <br />
                 ACCESS GALLERY
               </span>
             </button>
           </div>
-          <div className="absolute right-9 top-[-16px] p-6 text-left text-sm opacity-100 transition-opacity duration-300 md:top-1">
+          <div className="absolute right-9 top-[1] p-6 text-left text-sm opacity-100 transition-opacity duration-300 md:top-1">
             <p className="mb-1 text-xs font-normal">Preview</p>
             <div className="relative h-24 w-24 overflow-hidden border border-gray-300 md:h-32 md:w-32">
               {imagePreview && (
@@ -402,7 +435,7 @@ const Result = () => {
               )}
             </div>
           </div>
-          {image && (
+          {image && !isAnalyzing && (
             <div className="absolute bottom-24 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-2 md:bottom-8">
               <button
                 type="button"
@@ -424,6 +457,18 @@ const Result = () => {
               {errorMessage}
             </p>
           )}
+        </div>
+      )}
+
+      {showAnalysisSuccess && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 px-4">
+          <div
+            role="status"
+            aria-live="assertive"
+            className="w-full max-w-sm border border-white/20 bg-[#1A1B1C] px-6 py-5 text-center text-white shadow-2xl"
+          >
+            <p className="text-sm font-semibold">Image analyzed successfully!</p>
+          </div>
         </div>
       )}
     </main>

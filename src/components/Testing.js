@@ -120,11 +120,6 @@ const Testing = () => {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-background">
-      {/* Top heading */}
-      <div className="absolute top-2 left-12 z-20">
-        <p className="text-xs font-semibold">TO START ANALYSIS</p>
-      </div>
-
       {/* Center content */}
       <div className="relative flex items-center justify-center translate-y-60">
         {/* Rotating diamonds */}

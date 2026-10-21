@@ -23,10 +23,13 @@ body {
   --color-zinc-50: #f9f9f9;
   --color-brand-bg-Buttons: #1A1B1C;
   --color-brand-text-dark: #1A1B1C;
+  --color-brand-bg-dark: #1A1B1C;
   --color-brand-text-light: #FCFCFC;
   --color-brand-input-text: #8c8d8d;
   --color-brand-foreground-text: #1a1b1c83;
   --color-brand-border: #A0A4AB;
+  --color-brand-bg-dark2: #E1E1E2;
+  --color-brand-bg-light: #f3f3f4;
 }
 
 

@@ -8,6 +8,8 @@ export default function Home() {
         <Header />
       </header>
 
+      <p className="px-12 pb-2 text-xs font-semibold">TO START ANALYSIS</p>
+
       <section className="w-full min-h-0 flex-1 overflow-x-hidden">
         <Testing />
       </section>
