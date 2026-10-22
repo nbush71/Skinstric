@@ -266,10 +266,14 @@ const Result = () => {
               <button
                 type="button"
                 onClick={() => {
-                  const inputId =
-                    permissionPrompt === "camera" ? "camera-image" : "gallery-image";
+                  if (permissionPrompt === "camera") {
+                    setPermissionPrompt(null);
+                    router.push("/Camera");
+                    return;
+                  }
+
                   setPermissionPrompt(null);
-                  document.getElementById(inputId)?.click();
+                  document.getElementById("gallery-image")?.click();
                 }}
                 className="px-5 text-xs font-semibold transition-colors hover:bg-white/10"
               >

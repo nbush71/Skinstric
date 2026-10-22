@@ -59,13 +59,13 @@ const Summary = () => {
 
           {/** Age section */}
           <button className="flex min-h-20 cursor-pointer flex-col justify-between border-t bg-brand-bg-light p-2 text-brand-text-dark sm:p-3 md:min-h-24" onClick={() => setCategory("age")} >
-            <p className="text-base font-semibold">{picks.age?.age ?? topOf("age")}</p>
+            <p className="text-base font-semibold">{picks.age?.race ?? topOf("age")}</p>
             <div className="text-sm font-medium uppercase md:text-base">Age</div>
           </button>
 
           {/** Gender section */}
           <button className="flex min-h-20 cursor-pointer flex-col justify-between border-t bg-brand-bg-light p-2 text-brand-text-dark sm:p-3 md:min-h-24" onClick={() => setCategory("gender")}>
-            <p className="text-base font-semibold uppercase">{picks.gender?.gender ?? topOf("gender")}</p>
+            <p className="text-base font-semibold uppercase">{picks.gender?.race ?? topOf("gender")}</p>
             <div className="text-sm font-medium uppercase md:text-base">Sex</div>
           </button>
         </div>
