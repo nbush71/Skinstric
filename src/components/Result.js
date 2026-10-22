@@ -108,7 +108,7 @@ const Result = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ Image: imageToAnalyze }),
+        body: JSON.stringify({ image: imageToAnalyze }),
       });
 
       let result;
@@ -135,6 +135,8 @@ const Result = () => {
       ) {
         throw new Error("The server response did not include valid analysis results.");
       }
+      
+      localStorage.setItem("demographicData", JSON.stringify(data));
 
       setAnalysis({ message: result.message, data });
       setShowAnalysisSuccess(true);
