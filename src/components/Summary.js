@@ -21,6 +21,23 @@ const Summary = () => {
       try {
         const parsedPicks = JSON.parse(savedPicks);
         setConfirmedPicks(parsedPicks);
+        if (savedData) {
+          const demographics = JSON.parse(savedData);
+          const restoredPicks = {};
+
+          Object.entries(parsedPicks).forEach(([category, value]) => {
+            const probability = demographics[category]?.[value];
+
+            if (typeof probability === "number") {
+              restoredPicks[category] = {
+                race: value,
+                confidence: Math.round(probability * 100),
+              };
+            }
+          });
+
+          setPicks(restoredPicks);
+        }
       } catch (error) {
         console.error("Error loading saved selections:", error);
       }
@@ -227,7 +244,7 @@ const Summary = () => {
                 return updatedPicks;
               });
             }}
-            
+
             className="bg-brand-bg-dark px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-black sm:text-sm"
           >
             {confirmedPicks[category] === activeRace?.race
