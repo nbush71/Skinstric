@@ -126,6 +126,20 @@ const Result = () => {
         );
       }
 
+      useEffect(() => {
+        const savedPhoto = sessionStorage.getItem("capturedPhoto");
+        if (!savedPhoto) return;
+
+        sessionStorage.removeItem("capturedPhoto");
+
+        const base64Image = savedPhoto.split(",")[1];
+        if (!base64Image) return;
+
+        setImage(base64Image);
+        setImagePreview(savedPhoto);
+        handleAnalyze(base64Image);
+      }, []);
+
       const data = result?.data;
       if (
         typeof result?.message !== "string" ||

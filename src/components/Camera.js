@@ -160,7 +160,10 @@ const Camera = () => {
             <div className="absolute bottom-8 right-8 z-20">
               <button
                 onClick={() => {
-                  // Connect captured photo to your analysis flow here
+                  if (!photo) return;
+
+                  sessionStorage.setItem("capturedPhoto", photo);
+                  window.location.href = "/Result";
                 }}
               >
                 PROCEED ◇
