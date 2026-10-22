@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 const Summary = () => {
   const [selectedRace, setSelectedRace] = useState(null);
   const [confirmedRace, setConfirmedRace] = useState(null);
-  const isRaceConfirmed = confirmedRace?.race === selectedRace.race;
+
   const [analysisData, setAnalysisData] = useState(null);
 
   useEffect(() => {
@@ -25,6 +25,10 @@ const Summary = () => {
     .sort((a, b) => b.confidence - a.confidence);
 
   const activeRace = selectedRace ?? raceConfidences[0];
+
+  const isRaceConfirmed = Boolean(
+    confirmedRace && activeRace && confirmedRace.race === activeRace.race,
+  );
 
   return (
     <>
@@ -157,7 +161,7 @@ const Summary = () => {
           <button
             type="button"
             aria-pressed={isRaceConfirmed}
-            onClick={() => setConfirmedRace(selectedRace)}
+            onClick={() => setConfirmedRace(activeRace)}
             className="bg-brand-bg-dark px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-black sm:text-sm"
           >
             {isRaceConfirmed ? "CONFIRMED" : "CONFIRM"}
