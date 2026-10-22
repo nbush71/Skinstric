@@ -6,8 +6,8 @@ import { useState, useEffect } from "react";
 const Summary = () => {
   const [selectedRace, setSelectedRace] = useState(null);
   const [confirmedRace, setConfirmedRace] = useState(null);
-
   const [analysisData, setAnalysisData] = useState(null);
+  const [category, setCategory] = useState("race");
 
   useEffect(() => {
     const savedData = localStorage.getItem("demographicData");
@@ -17,7 +17,7 @@ const Summary = () => {
     }
   }, []);
 
-  const raceConfidences = Object.entries(analysisData?.race ?? {})
+  const raceConfidences = Object.entries(analysisData?.[category] ?? {})
     .map(([race, probability]) => ({
       race,
       confidence: Math.round(probability * 100),
@@ -52,22 +52,23 @@ const Summary = () => {
       {/** Race section */}
       <div className="mt-4 mb-6 grid grid-cols-1 gap-3 md:grid-cols-[85px_minmax(0,1fr)_minmax(150px,0.38fr)] md:gap-4">
         <div className="grid grid-cols-3 gap-2 md:flex md:flex-col md:gap-3">
-          <div className="flex min-h-20 cursor-pointer flex-col justify-between bg-brand-bg-dark p-2 text-white hover:bg-black sm:p-3 md:min-h-24">
+
+          <button className="flex min-h-20 cursor-pointer flex-col justify-between bg-brand-bg-dark p-2 text-white hover:bg-black sm:p-3 md:min-h-24" onClick={() => setCategory("race")} >
             <p className="text-base font-semibold">{activeRace?.race}</p>
             <div className="text-sm font-medium uppercase md:text-base">Race</div>
-          </div>
+          </button>
 
           {/** Age section */}
-          <div className="flex min-h-20 cursor-pointer flex-col justify-between border-t bg-brand-bg-light p-2 text-brand-text-dark sm:p-3 md:min-h-24">
+          <button className="flex min-h-20 cursor-pointer flex-col justify-between border-t bg-brand-bg-light p-2 text-brand-text-dark sm:p-3 md:min-h-24" onClick={() => setCategory("age")} >
             <p className="text-base font-semibold">{predictedAge}</p>
             <div className="text-sm font-medium uppercase md:text-base">Age</div>
-          </div>
+          </button>
 
           {/** Gender section */}
-          <div className="flex min-h-20 cursor-pointer flex-col justify-between border-t bg-brand-bg-light p-2 text-brand-text-dark sm:p-3 md:min-h-24">
+          <button className="flex min-h-20 cursor-pointer flex-col justify-between border-t bg-brand-bg-light p-2 text-brand-text-dark sm:p-3 md:min-h-24" onClick={() => setCategory("gender")}>
             <p className="text-base font-semibold uppercase">{predictedGender}</p>
             <div className="text-sm font-medium uppercase md:text-base">Sex</div>
-          </div>
+          </button>
         </div>
 
         {/** Confidence section */}
@@ -134,6 +135,7 @@ const Summary = () => {
           </ul>
         </section>
       </div>
+
 
       <footer className="fixed inset-x-0 bottom-0 z-20 grid grid-cols-2 items-center gap-2 bg-background px-4 py-3 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:px-6 md:static md:mt-6 md:mb-4 md:px-8">
         <a
