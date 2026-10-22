@@ -8,8 +8,7 @@ const Summary = () => {
   const [confirmedRace, setConfirmedRace] = useState(null);
   const [analysisData, setAnalysisData] = useState(null);
   const [category, setCategory] = useState("race");
- 
-   
+
   const [picks, setPicks] = useState({});
 
   useEffect(() => {
@@ -27,15 +26,12 @@ const Summary = () => {
     }))
     .sort((a, b) => b.confidence - a.confidence);
 
-  const activeRace = selectedRace ?? raceConfidences[0];
+  const activeRace = picks[category] ?? raceConfidences[0];
 
-  const predictedAge = Object.entries(analysisData?.age ?? {}).sort(
-    (a, b) => b[1] - a[1],
-  )[0]?.[0];
-
-  const predictedGender = Object.entries(analysisData?.gender ?? {}).sort(
-    (a, b) => b[1] - a[1],
-  )[0]?.[0];
+  const topOf = (key) =>
+    Object.entries(analysisData?.[key] ?? {}).sort(
+      (a, b) => b[1] - a[1],
+    )[0]?.[0];
 
 
   const isRaceConfirmed = Boolean(
@@ -56,20 +52,20 @@ const Summary = () => {
       <div className="mt-4 mb-6 grid grid-cols-1 gap-3 md:grid-cols-[85px_minmax(0,1fr)_minmax(150px,0.38fr)] md:gap-4">
         <div className="grid grid-cols-3 gap-2 md:flex md:flex-col md:gap-3">
 
-          <button className="flex min-h-20 cursor-pointer flex-col justify-between bg-brand-bg-dark p-2 text-white hover:bg-black sm:p-3 md:min-h-24" onClick={() => setCategory("race")}>
-            <p className="text-base font-semibold">{activeRace?.race}</p>
+          <button className="flex min-h-20 cursor-pointer flex-col justify-between bg-brand-bg-dark p-2 text-white hover:bg-black sm:p-3 md:min-h-24" onClick={() => setCategory("race")} >
+            <p className="text-base font-semibold">{picks.race?.race ?? topOf("race")}</p>
             <div className="text-sm font-medium uppercase md:text-base">Race</div>
           </button>
 
           {/** Age section */}
-          <button className="flex min-h-20 cursor-pointer flex-col justify-between border-t bg-brand-bg-light p-2 text-brand-text-dark sm:p-3 md:min-h-24" onClick={() => setCategory("age")}  >
-            <p className="text-base font-semibold">{predictedAge}</p>
+          <button className="flex min-h-20 cursor-pointer flex-col justify-between border-t bg-brand-bg-light p-2 text-brand-text-dark sm:p-3 md:min-h-24" onClick={() => setCategory("age")} >
+            <p className="text-base font-semibold">{picks.age?.age ?? topOf("age")}</p>
             <div className="text-sm font-medium uppercase md:text-base">Age</div>
           </button>
 
           {/** Gender section */}
           <button className="flex min-h-20 cursor-pointer flex-col justify-between border-t bg-brand-bg-light p-2 text-brand-text-dark sm:p-3 md:min-h-24" onClick={() => setCategory("gender")}>
-            <p className="text-base font-semibold uppercase">{predictedGender}</p>
+            <p className="text-base font-semibold uppercase">{picks.gender?.gender ?? topOf("gender")}</p>
             <div className="text-sm font-medium uppercase md:text-base">Sex</div>
           </button>
         </div>
@@ -111,7 +107,7 @@ const Summary = () => {
                     type="button"
                     aria-pressed={isSelected}
                     onClick={() => {
-                      setSelectedRace(race); 
+                      setPicks({ ...picks, [category]: race });
                     }}
                     className={`flex min-h-10 w-full items-center gap-2 px-3 py-2 text-left text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-brand-border ${
                       isSelected
@@ -165,7 +161,7 @@ const Summary = () => {
           <button
             type="button"
             onClick={() => {
-              setSelectedRace(null);
+              setPicks({});
               setConfirmedRace(null);
             }}
             className="border border-brand-text-dark px-4 py-2 text-xs font-semibold text-brand-text-dark transition-colors hover:bg-brand-bg-light sm:text-sm"
@@ -174,11 +170,11 @@ const Summary = () => {
           </button>
           <button
             type="button"
-            aria-pressed={isRaceConfirmed}
-            onClick={() => setConfirmedRace(activeRace)}
+            aria-pressed={picks[category] === activeRace}
+            onClick={() => setPicks({ ...picks, [category]: activeRace })}
             className="bg-brand-bg-dark px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-black sm:text-sm"
           >
-            {isRaceConfirmed ? "CONFIRMED" : "CONFIRM"}
+            {picks[category] === activeRace ? "CONFIRMED" : "CONFIRM"}
           </button>
         </div>
       </footer>
