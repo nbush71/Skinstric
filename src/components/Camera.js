@@ -8,7 +8,6 @@ const Camera = () => {
   const videoRef = useRef(null);
   const [cameraReady, setCameraReady] = useState(false);
   const [photo, setPhoto] = useState(null);
-  const [stream, setStream] = useState(null);
 
   useEffect(() => {
     let cameraStream;
