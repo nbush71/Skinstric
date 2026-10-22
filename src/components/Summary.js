@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 
 const Summary = () => {
-  const [confirmedRace, setConfirmedRace] = useState(null);
   const [confirmedPicks, setConfirmedPicks] = useState({});
   const [analysisData, setAnalysisData] = useState(null);
   const [category, setCategory] = useState("race");
@@ -12,9 +11,19 @@ const Summary = () => {
 
   useEffect(() => {
     const savedData = localStorage.getItem("demographicData");
+    const savedPicks = localStorage.getItem("confirmedPicks");
 
     if (savedData) {
       setAnalysisData(JSON.parse(savedData));
+    }
+
+    if (savedPicks) {
+      try {
+        const parsedPicks = JSON.parse(savedPicks);
+        setConfirmedPicks(parsedPicks);
+      } catch (error) {
+        console.error("Error loading saved selections:", error);
+      }
     }
   }, []);
 
@@ -186,6 +195,8 @@ const Summary = () => {
             onClick={() => {
               setPicks({});
               setConfirmedPicks({});
+
+              localStorage.removeItem("confirmedPicks");
             }}
             className="border border-brand-text-dark px-4 py-2 text-xs font-semibold text-brand-text-dark transition-colors hover:bg-brand-bg-light sm:text-sm"
           >
@@ -202,11 +213,21 @@ const Summary = () => {
                 [category]: activeRace,
               }));
 
-              setConfirmedPicks((prev) => ({
-                ...prev,
-                [category]: activeRace.race,
-              }));
+              setConfirmedPicks((prev) => {
+                const updatedPicks = {
+                  ...prev,
+                  [category]: activeRace.race,
+                };
+
+                localStorage.setItem(
+                  "confirmedPicks",
+                  JSON.stringify(updatedPicks),
+                );
+
+                return updatedPicks;
+              });
             }}
+            
             className="bg-brand-bg-dark px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-black sm:text-sm"
           >
             {confirmedPicks[category] === activeRace?.race
