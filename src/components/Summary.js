@@ -2,20 +2,9 @@
 
 import { useState, useEffect } from "react";
 
-const raceConfidences = [
-  { race: "East asian", confidence: 91 },
-  { race: "Middle eastern", confidence: 5 },
-  { race: "Black", confidence: 2 },
-  { race: "White", confidence: 0 },
-  { race: "Southeast asian", confidence: 0 },
-  { race: "South asian", confidence: 0 },
-  { race: "Latino hispanic", confidence: 0 },
-];
-
-const defaultRace = raceConfidences[0];
 
 const Summary = () => {
-  const [selectedRace, setSelectedRace] = useState(defaultRace);
+  const [selectedRace, setSelectedRace] = useState(null);
   const [confirmedRace, setConfirmedRace] = useState(null);
   const isRaceConfirmed = confirmedRace?.race === selectedRace.race;
   const [analysisData, setAnalysisData] = useState(null);
@@ -27,6 +16,15 @@ const Summary = () => {
       setAnalysisData(JSON.parse(savedData));
     }
   }, []);
+
+  const raceConfidences = Object.entries(analysisData?.race ?? {})
+    .map(([race, probability]) => ({
+      race,
+      confidence: Math.round(probability * 100),
+    }))
+    .sort((a, b) => b.confidence - a.confidence);
+
+  const activeRace = selectedRace ?? raceConfidences[0];
 
   return (
     <>
@@ -62,21 +60,21 @@ const Summary = () => {
         {/** Confidence section */}
         <section className="relative h-[clamp(280px,45dvh,600px)] min-h-[280px] bg-gray-100 p-4 md:h-[clamp(320px,55dvh,620px)]">
           <p className="text-3xl text-brand-text-dark md:text-[40px]">
-            {analysisData?.race}
+            {activeRace?.race}
           </p>
           <div
             role="img"
-            aria-label={`${analysisData?.race} confidence: ${analysisData?.raceConfidence} percent`}
+            aria-label={`${activeRace?.race} confidence: ${activeRace?.confidence} percent`}
             className="absolute inset-x-4 bottom-4 top-20 grid place-items-center"
           >
             <div
               className="relative aspect-square w-full max-w-96 rounded-full p-[6px]"
               style={{
-                background: `conic-gradient(#1a1b1c 0 ${analysisData?.raceConfidence}%, #d6d6d6 ${analysisData?.raceConfidence}% 100%)`,
+                background: `conic-gradient(#1a1b1c 0 ${activeRace?.confidence}%, #d6d6d6 ${activeRace?.confidence}% 100%)`,
               }}
             >
               <div className="grid h-full w-full place-items-center rounded-full bg-gray-100 text-[40px] text-brand-text-dark">
-                {analysisData?.raceConfidence}%
+                {activeRace?.confidence}%
               </div>
             </div>
           </div>
@@ -87,8 +85,8 @@ const Summary = () => {
             Race A.I. Confidence
           </div>
           <ul>
-            {analysisData?.raceConfidences.map((race) => {
-              const isSelected = analysisData?.race === race.race;
+            {raceConfidences.map((race) => {
+              const isSelected = activeRace?.race === race.race;
 
               return (
                 <li key={race.race}>
@@ -96,11 +94,7 @@ const Summary = () => {
                     type="button"
                     aria-pressed={isSelected}
                     onClick={() => {
-                      setAnalysisData((current) => ({
-                        ...current,
-                        race: race.race,
-                        raceConfidence: race.confidence,
-                      }));
+                      setSelectedRace(race); 
                     }}
                     className={`flex min-h-10 w-full items-center gap-2 px-3 py-2 text-left text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-brand-border ${
                       isSelected
