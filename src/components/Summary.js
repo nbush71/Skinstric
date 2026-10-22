@@ -26,6 +26,15 @@ const Summary = () => {
 
   const activeRace = selectedRace ?? raceConfidences[0];
 
+  const predictedAge = Object.entries(analysisData?.age ?? {}).sort(
+    (a, b) => b[1] - a[1],
+  )[0]?.[0];
+
+  const predictedGender = Object.entries(analysisData?.gender ?? {}).sort(
+    (a, b) => b[1] - a[1],
+  )[0]?.[0];
+
+
   const isRaceConfirmed = Boolean(
     confirmedRace && activeRace && confirmedRace.race === activeRace.race,
   );
@@ -44,19 +53,19 @@ const Summary = () => {
       <div className="mt-4 mb-6 grid grid-cols-1 gap-3 md:grid-cols-[85px_minmax(0,1fr)_minmax(150px,0.38fr)] md:gap-4">
         <div className="grid grid-cols-3 gap-2 md:flex md:flex-col md:gap-3">
           <div className="flex min-h-20 cursor-pointer flex-col justify-between bg-brand-bg-dark p-2 text-white hover:bg-black sm:p-3 md:min-h-24">
-            <p className="text-base font-semibold">{analysisData?.race}</p>
+            <p className="text-base font-semibold">{activeRace?.race}</p>
             <div className="text-sm font-medium uppercase md:text-base">Race</div>
           </div>
 
           {/** Age section */}
           <div className="flex min-h-20 cursor-pointer flex-col justify-between border-t bg-brand-bg-light p-2 text-brand-text-dark sm:p-3 md:min-h-24">
-            <p className="text-base font-semibold">{analysisData?.age}</p>
+            <p className="text-base font-semibold">{predictedAge}</p>
             <div className="text-sm font-medium uppercase md:text-base">Age</div>
           </div>
 
           {/** Gender section */}
           <div className="flex min-h-20 cursor-pointer flex-col justify-between border-t bg-brand-bg-light p-2 text-brand-text-dark sm:p-3 md:min-h-24">
-            <p className="text-base font-semibold uppercase">{analysisData?.gender}</p>
+            <p className="text-base font-semibold uppercase">{predictedGender}</p>
             <div className="text-sm font-medium uppercase md:text-base">Sex</div>
           </div>
         </div>
@@ -151,7 +160,7 @@ const Summary = () => {
           <button
             type="button"
             onClick={() => {
-              setSelectedRace(defaultRace);
+              setSelectedRace(null);
               setConfirmedRace(null);
             }}
             className="border border-brand-text-dark px-4 py-2 text-xs font-semibold text-brand-text-dark transition-colors hover:bg-brand-bg-light sm:text-sm"
