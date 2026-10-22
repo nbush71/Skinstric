@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react";
 
-
 const Summary = () => {
   const [selectedRace, setSelectedRace] = useState(null);
   const [confirmedRace, setConfirmedRace] = useState(null);
+  const [confirmedPicks, setConfirmedPicks] = useState({});
   const [analysisData, setAnalysisData] = useState(null);
   const [category, setCategory] = useState("race");
 
@@ -33,7 +33,6 @@ const Summary = () => {
       (a, b) => b[1] - a[1],
     )[0]?.[0];
 
-
   const isRaceConfirmed = Boolean(
     confirmedRace && activeRace && confirmedRace.race === activeRace.race,
   );
@@ -51,22 +50,42 @@ const Summary = () => {
       {/** Race section */}
       <div className="mt-4 mb-6 grid grid-cols-1 gap-3 md:grid-cols-[85px_minmax(0,1fr)_minmax(150px,0.38fr)] md:gap-4">
         <div className="grid grid-cols-3 gap-2 md:flex md:flex-col md:gap-3">
-
-          <button className="flex min-h-20 cursor-pointer flex-col justify-between bg-brand-bg-dark p-2 text-white hover:bg-black sm:p-3 md:min-h-24" onClick={() => setCategory("race")} >
-            <p className="text-base font-semibold">{picks.race?.race ?? topOf("race")}</p>
-            <div className="text-sm font-medium uppercase md:text-base">Race</div>
+          <button
+            className="flex min-h-20 cursor-pointer flex-col justify-between bg-brand-bg-dark p-2 text-white hover:bg-black sm:p-3 md:min-h-24"
+            onClick={() => setCategory("race")}
+          >
+            <p className="text-base font-semibold">
+              {picks.race?.race ?? topOf("race")}
+            </p>
+            <div className="text-sm font-medium uppercase md:text-base">
+              Race
+            </div>
           </button>
 
           {/** Age section */}
-          <button className="flex min-h-20 cursor-pointer flex-col justify-between border-t bg-brand-bg-light p-2 text-brand-text-dark sm:p-3 md:min-h-24" onClick={() => setCategory("age")} >
-            <p className="text-base font-semibold">{picks.age?.race ?? topOf("age")}</p>
-            <div className="text-sm font-medium uppercase md:text-base">Age</div>
+          <button
+            className="flex min-h-20 cursor-pointer flex-col justify-between border-t bg-brand-bg-light p-2 text-brand-text-dark sm:p-3 md:min-h-24"
+            onClick={() => setCategory("age")}
+          >
+            <p className="text-base font-semibold">
+              {picks.age?.race ?? topOf("age")}
+            </p>
+            <div className="text-sm font-medium uppercase md:text-base">
+              Age
+            </div>
           </button>
 
           {/** Gender section */}
-          <button className="flex min-h-20 cursor-pointer flex-col justify-between border-t bg-brand-bg-light p-2 text-brand-text-dark sm:p-3 md:min-h-24" onClick={() => setCategory("gender")}>
-            <p className="text-base font-semibold uppercase">{picks.gender?.race ?? topOf("gender")}</p>
-            <div className="text-sm font-medium uppercase md:text-base">Sex</div>
+          <button
+            className="flex min-h-20 cursor-pointer flex-col justify-between border-t bg-brand-bg-light p-2 text-brand-text-dark sm:p-3 md:min-h-24"
+            onClick={() => setCategory("gender")}
+          >
+            <p className="text-base font-semibold uppercase">
+              {picks.gender?.race ?? topOf("gender")}
+            </p>
+            <div className="text-sm font-medium uppercase md:text-base">
+              Sex
+            </div>
           </button>
         </div>
 
@@ -108,6 +127,10 @@ const Summary = () => {
                     aria-pressed={isSelected}
                     onClick={() => {
                       setPicks({ ...picks, [category]: race });
+                      setConfirmedPicks((prev) => ({
+                        ...prev,
+                        [category]: undefined,
+                      }));
                     }}
                     className={`flex min-h-10 w-full items-center gap-2 px-3 py-2 text-left text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-brand-border ${
                       isSelected
@@ -135,7 +158,6 @@ const Summary = () => {
         </section>
       </div>
 
-
       <footer className="fixed inset-x-0 bottom-0 z-20 grid grid-cols-2 items-center gap-2 bg-background px-4 py-3 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:px-6 md:static md:mt-6 md:mb-4 md:px-8">
         <a
           href="/Select"
@@ -143,10 +165,16 @@ const Summary = () => {
           className="group flex items-center gap-2 md:gap-6"
         >
           <span className="flex size-10 rotate-45 items-center justify-center border border-[#1A1B1C] transition-transform duration-300 group-hover:scale-110 md:size-12">
-            <span aria-hidden="true" className="-rotate-45 text-[9px] font-semibold sm:hidden">
+            <span
+              aria-hidden="true"
+              className="-rotate-45 text-[9px] font-semibold sm:hidden"
+            >
               BACK
             </span>
-            <span aria-hidden="true" className="hidden -rotate-45 text-xs sm:inline">
+            <span
+              aria-hidden="true"
+              className="hidden -rotate-45 text-xs sm:inline"
+            >
               ◀
             </span>
           </span>
@@ -162,6 +190,7 @@ const Summary = () => {
             type="button"
             onClick={() => {
               setPicks({});
+              setConfirmedPicks({});
               setConfirmedRace(null);
             }}
             className="border border-brand-text-dark px-4 py-2 text-xs font-semibold text-brand-text-dark transition-colors hover:bg-brand-bg-light sm:text-sm"
@@ -171,10 +200,24 @@ const Summary = () => {
           <button
             type="button"
             aria-pressed={picks[category] === activeRace}
-            onClick={() => setPicks({ ...picks, [category]: activeRace })}
+            onClick={() => {
+              if (!activeRace) return;
+
+              setPicks((prev) => ({
+                ...prev,
+                [category]: activeRace,
+              }));
+
+              setConfirmedPicks((prev) => ({
+                ...prev,
+                [category]: activeRace.race,
+              }));
+            }}
             className="bg-brand-bg-dark px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-black sm:text-sm"
           >
-            {picks[category] === activeRace ? "CONFIRMED" : "CONFIRM"}
+            {confirmedPicks[category] === activeRace?.race
+              ? "CONFIRMED"
+              : "CONFIRM"}
           </button>
         </div>
       </footer>
