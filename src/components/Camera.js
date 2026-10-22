@@ -1,7 +1,36 @@
+"use client";
+
 import Image from "next/image";
+import { useState, useEffect, useRef } from "react";
 import shutter from "../assets/shutter.svg";
 
+
 const Camera = () => {
+  const videoRef = useRef(null);
+  const [stream, setStream] = useState(null);
+
+useEffect(() => {
+  
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then((stream) => {
+      setStream(stream);
+
+      const videoElement = document.querySelector("video");
+      if (videoElement) {
+        videoElement.srcObject = stream;
+      }
+
+      videoRef.current = null;
+      videoRef.current.srcObject = stream;
+      navigator.mediaDevices.getUserMedia({ video: true });
+      toDataURL();
+      // Handle the camera stream here
+    })
+    .catch((error) => {
+      console.error("Error accessing camera:", error);
+    });
+  }, []);
+  
   return (
     <div className="relative h-full w-full overflow-hidden text-brand-text-dark">
       <div className="result-diamond-stage absolute left-1/2 top-1/2 flex aspect-square w-[min(94vw,90dvh,720px)] -translate-x-1/2 -translate-y-1/2 items-center justify-center">
@@ -25,6 +54,7 @@ const Camera = () => {
           </div>
           <p className="text-center text-[16px] font-semibold uppercase">
             Setting up camera ...
+            <video ref={videoRef} autoPlay playsInline muted />
           </p>
         </div>
       </div>
