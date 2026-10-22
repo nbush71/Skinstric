@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 
 const Summary = () => {
-  const [selectedRace, setSelectedRace] = useState(null);
   const [confirmedRace, setConfirmedRace] = useState(null);
   const [confirmedPicks, setConfirmedPicks] = useState({});
   const [analysisData, setAnalysisData] = useState(null);
@@ -32,10 +31,6 @@ const Summary = () => {
     Object.entries(analysisData?.[key] ?? {}).sort(
       (a, b) => b[1] - a[1],
     )[0]?.[0];
-
-  const isRaceConfirmed = Boolean(
-    confirmedRace && activeRace && confirmedRace.race === activeRace.race,
-  );
 
   return (
     <>
@@ -191,7 +186,6 @@ const Summary = () => {
             onClick={() => {
               setPicks({});
               setConfirmedPicks({});
-              setConfirmedRace(null);
             }}
             className="border border-brand-text-dark px-4 py-2 text-xs font-semibold text-brand-text-dark transition-colors hover:bg-brand-bg-light sm:text-sm"
           >
@@ -199,7 +193,7 @@ const Summary = () => {
           </button>
           <button
             type="button"
-            aria-pressed={picks[category] === activeRace}
+            aria-pressed={confirmedPicks[category] === activeRace?.race}
             onClick={() => {
               if (!activeRace) return;
 
