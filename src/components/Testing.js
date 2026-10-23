@@ -166,7 +166,7 @@ const Testing = () => {
                   }}
                   aria-invalid={Boolean(validationError)}
                   aria-describedby={validationError ? "form-validation-error" : undefined}
-                  className="field-sizing-content w-auto min-w-0 max-w-[80vw] border-b border-brand-input-text bg-transparent p-2 text-center text-[clamp(28px,5vw,50px)] outline-none placeholder:text-brand-input-text"
+                  className="w-[80vw] max-w-[480px] border-b border-brand-input-text bg-transparent p-2 text-center text-[clamp(28px,5vw,50px)] outline-none placeholder:text-brand-input-text"
                   placeholder="Introduce Yourself"
                   aria-label="Introduce Yourself"
                 />
@@ -206,7 +206,7 @@ const Testing = () => {
                   }}
                   aria-invalid={Boolean(validationError)}
                   aria-describedby={validationError ? "form-validation-error" : undefined}
-                  className="field-sizing-content w-auto min-w-0 max-w-[80vw] border-b border-brand-input-text bg-transparent p-2 text-center text-[clamp(28px,5vw,50px)] outline-none placeholder:text-brand-input-text"
+                  className="w-[80vw] max-w-[480px] border-b border-brand-input-text bg-transparent p-2 text-center text-[clamp(28px,5vw,50px)] outline-none placeholder:text-brand-input-text"
                   placeholder="Your City Name"
                   aria-label="Your City Name"
                 />
