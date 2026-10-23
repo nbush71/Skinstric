@@ -32,7 +32,11 @@ const MainHeading = () => {
           <div className="text-[42px] sm:text-[60px] xl:text-[100px] text-brand-text-dark font-inter font-normal tracking-tighter leading-none">
             Sophisticated
             <br />
-            <span className="text-[42px] sm:text-[60px] xl:text-[100px] text-brand-text-dark font-inter font-normal tracking-tighter leading-none">
+            <span
+              className={`block text-[42px] sm:text-[60px] xl:text-[100px] text-brand-text-dark font-inter font-normal tracking-tighter leading-none text-center ${
+                isTakeTestHovered || isDiscoverActive ? "xl:text-left" : ""
+              }`}
+            >
               skincare
             </span>
           </div>
