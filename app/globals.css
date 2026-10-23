@@ -42,39 +42,70 @@ body {
 }
 
 .diamond-outer {
-  width: min(62vw, 60dvh, 540px);
-  height: min(62vw, 60dvh, 540px);
+  width: min(55.8vw, 54dvh, 486px);
+  height: min(55.8vw, 54dvh, 486px);
   opacity: 0.4;
-  animation: spinOuter 26.67s linear infinite;
+  animation: spinOuter 33.34s linear infinite;
 }
 
 .diamond-middle {
-  width: min(54vw, 52dvh, 470px);
-  height: min(54vw, 52dvh, 470px);
+  width: min(48.6vw, 46.8dvh, 423px);
+  height: min(48.6vw, 46.8dvh, 423px);
   opacity: 0.65;
-  animation: spinMiddle 22.22s linear infinite;
+  animation: spinMiddle 27.78s linear infinite;
 }
 
 .diamond-inner {
-  width: min(46vw, 44dvh, 400px);
-  height: min(46vw, 44dvh, 400px);
+  width: min(41.4vw, 39.6dvh, 360px);
+  height: min(41.4vw, 39.6dvh, 360px);
   opacity: 0.9;
-  animation: spinInner 17.78s linear infinite;
+  animation: spinInner 22.23s linear infinite;
 }
 
 .result-diamond-stage .diamond-outer {
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
 }
 
 .result-diamond-stage .diamond-middle {
-  width: 86%;
-  height: 86%;
+  width: 77.4%;
+  height: 77.4%;
 }
 
 .result-diamond-stage .diamond-inner {
-  width: 72%;
-  height: 72%;
+  width: 64.8%;
+  height: 64.8%;
+}
+
+.testing-diamond-stage .diamond {
+  scale: 0.9;
+}
+
+.confidence-ring-slot {
+  container-type: size;
+}
+
+.confidence-ring {
+  width: min(100cqw, 100cqh, 24rem);
+  height: min(100cqw, 100cqh, 24rem);
+}
+
+.result-diamond-stage {
+  width: min(68vw, 28dvh, 280px, max(48px, calc(40dvh - 65px)));
+  height: min(68vw, 28dvh, 280px, max(48px, calc(40dvh - 65px)));
+}
+
+@media (min-width: 768px) {
+  .result-diamond-stage {
+    width: min(39vw, 58dvh, 440px, max(48px, calc(70dvh - 99px)));
+    height: min(39vw, 58dvh, 440px, max(48px, calc(70dvh - 99px)));
+  }
+}
+
+@media (max-height: 500px) {
+  .result-gallery-label {
+    bottom: -48px;
+  }
 }
 
 @keyframes spinOuter {
@@ -106,34 +137,34 @@ body {
 
 @media (min-width: 640px) {
   .diamond-outer {
-    width: min(66vw, 64dvh, 762px);
-    height: min(66vw, 64dvh, 762px);
+    width: min(59.4vw, 57.6dvh, 686px);
+    height: min(59.4vw, 57.6dvh, 686px);
   }
 
   .diamond-middle {
-    width: min(58vw, 56dvh, 682px);
-    height: min(58vw, 56dvh, 682px);
+    width: min(52.2vw, 50.4dvh, 614px);
+    height: min(52.2vw, 50.4dvh, 614px);
   }
 
   .diamond-inner {
-    width: min(50vw, 48dvh, 602px);
-    height: min(50vw, 48dvh, 602px);
+    width: min(45vw, 43.2dvh, 542px);
+    height: min(45vw, 43.2dvh, 542px);
   }
 }
 
 @media (min-width: 1024px) {
   .diamond-outer {
-    width: min(68vw, 68dvh, 762px);
-    height: min(68vw, 68dvh, 762px);
+    width: min(61.2vw, 61.2dvh, 686px);
+    height: min(61.2vw, 61.2dvh, 686px);
   }
 
   .diamond-middle {
-    width: min(60vw, 60dvh, 682px);
-    height: min(60vw, 60dvh, 682px);
+    width: min(54vw, 54dvh, 614px);
+    height: min(54vw, 54dvh, 614px);
   }
 
   .diamond-inner {
-    width: min(52vw, 52dvh, 602px);
-    height: min(52vw, 52dvh, 602px);
+    width: min(46.8vw, 46.8dvh, 542px);
+    height: min(46.8vw, 46.8dvh, 542px);
   }
 }

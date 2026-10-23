@@ -209,7 +209,7 @@ const Result = () => {
   );
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-background">
+    <div className="relative h-full min-h-0 overflow-hidden bg-background">
       <div className="fixed bottom-8 left-8 z-20">
         <a href="/Testing" aria-label="Back" className="group flex items-center gap-6">
           <div className="flex h-12 w-12 rotate-45 items-center justify-center border border-[#1A1B1C] transition-transform duration-300 group-hover:scale-110">
@@ -377,8 +377,8 @@ const Result = () => {
           </div>
         </section>
       ) : (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-1 py-12 md:flex-row md:justify-between md:gap-0 md:px-8 md:py-0 lg:px-16">
-          <div className="result-diamond-stage relative flex h-[min(70vw,28dvh,300px)] w-[min(70vw,28dvh,300px)] shrink-0 items-center justify-center md:h-[min(45vw,58dvh,500px)] md:w-[min(45vw,58dvh,500px)]">
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-1 py-4 md:flex-row md:gap-8 md:px-4 md:py-0">
+          <div className="result-diamond-stage relative flex shrink-0 items-center justify-center">
             <div aria-hidden="true" className="pointer-events-none absolute inset-0">
               <div className="diamond diamond-outer" />
               <div className="diamond diamond-middle" />
@@ -411,7 +411,7 @@ const Result = () => {
               </span>
             </button>
           </div>
-          <div className="result-diamond-stage relative flex h-[min(70vw,28dvh,300px)] w-[min(70vw,28dvh,300px)] shrink-0 items-center justify-center md:h-[min(45vw,58dvh,500px)] md:w-[min(45vw,58dvh,500px)]">
+          <div className="result-diamond-stage relative flex shrink-0 items-center justify-center">
             <div aria-hidden="true" className="pointer-events-none absolute inset-0">
               <div className="diamond diamond-outer" />
               <div className="diamond diamond-middle" />
@@ -437,16 +437,16 @@ const Result = () => {
                   className="hidden h-full w-full rotate-180 md:block"
                 />
               </div>
-              <span className="absolute bottom-[-60px] right-[-26px] w-40 text-right text-[16px] font-medium leading-tight tracking-wide md:bottom-[-84px] md:right-[174px]">
+              <span className="result-gallery-label absolute bottom-[-60px] right-[-26px] w-40 text-right text-[16px] font-medium leading-tight tracking-wide md:bottom-[-84px] md:right-[174px]">
                 ALLOW A.I.
                 <br />
                 ACCESS GALLERY
               </span>
             </button>
           </div>
-          <div className="absolute right-9 top-[1] p-6 text-left text-sm opacity-100 transition-opacity duration-300 md:top-1">
+          <div className="fixed right-7 top-24 z-20 text-left text-sm opacity-100 transition-opacity duration-300">
             <p className="mb-1 text-xs font-normal">Preview</p>
-            <div className="relative h-24 w-24 overflow-hidden border border-gray-300 md:h-32 md:w-32">
+            <div className="relative h-32 w-32 overflow-hidden border border-gray-300">
               {imagePreview && (
                 <Image
                   src={imagePreview}
@@ -494,7 +494,7 @@ const Result = () => {
           </div>
         </div>
       )}
-    </main>
+    </div>
   );
 };
 

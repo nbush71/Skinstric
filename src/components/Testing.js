@@ -120,15 +120,15 @@ const Testing = () => {
   };
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-background">
+    <div className="relative h-full min-h-0 overflow-hidden bg-background">
       {/* Center content */}
-      <div className="relative flex items-center justify-center translate-y-60">
+      <div className="absolute inset-0 flex -translate-y-14 items-center justify-center sm:-translate-y-16">
         {/* Rotating diamonds */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center"
+          className="testing-diamond-stage pointer-events-none absolute inset-0 z-0 flex items-center justify-center"
         >
-          <div className="relative w-[620px] h-[620px]">
+          <div className="relative aspect-square w-[min(90vw,70dvh,620px)]">
             <div className="diamond diamond-outer" />
             <div className="diamond diamond-middle" />
             <div className="diamond diamond-inner" />
@@ -166,7 +166,7 @@ const Testing = () => {
                   }}
                   aria-invalid={Boolean(validationError)}
                   aria-describedby={validationError ? "form-validation-error" : undefined}
-                  className="border-b border-brand-input-text p-2 w-[80vw] max-w-[480px] placeholder:text-brand-input-text bg-transparent text-center text-[clamp(28px,5vw,50px)] outline-none"
+                  className="field-sizing-content w-auto min-w-0 max-w-[80vw] border-b border-brand-input-text bg-transparent p-2 text-center text-[clamp(28px,5vw,50px)] outline-none placeholder:text-brand-input-text"
                   placeholder="Introduce Yourself"
                   aria-label="Introduce Yourself"
                 />
@@ -206,7 +206,7 @@ const Testing = () => {
                   }}
                   aria-invalid={Boolean(validationError)}
                   aria-describedby={validationError ? "form-validation-error" : undefined}
-                  className="border-b border-brand-input-text p-2 w-[80vw] max-w-[480px] placeholder:text-brand-input-text bg-transparent text-center text-[clamp(28px,5vw,50px)] outline-none"
+                  className="field-sizing-content w-auto min-w-0 max-w-[80vw] border-b border-brand-input-text bg-transparent p-2 text-center text-[clamp(28px,5vw,50px)] outline-none placeholder:text-brand-input-text"
                   placeholder="Your City Name"
                   aria-label="Your City Name"
                 />
@@ -252,19 +252,22 @@ const Testing = () => {
       </div>
 
       {/* Back button */}
-      <div className="fixed bottom-8 left-8 z-20">
+      <div className="fixed bottom-14 left-8 z-20 sm:bottom-8">
         <a href="/" aria-label="Back" className="group flex items-center gap-6 whitespace-nowrap">
           <div className="flex h-12 w-12 shrink-0 rotate-45 items-center justify-center border border-[#1A1B1C] transition-transform duration-300 group-hover:scale-110">
-            <span className="-rotate-45 text-xs">◀</span>
+            <span className="-rotate-45 text-[9px] font-bold tracking-wide md:hidden">
+              BACK
+            </span>
+            <span className="hidden -rotate-45 text-xs md:inline">◀</span>
           </div>
 
-          <span className="text-sm font-semibold">BACK</span>
+          <span className="hidden text-sm font-semibold md:inline">BACK</span>
         </a>
       </div>
 
       {/** Proceed button for the complete step */}
       {step === "complete" && (
-        <div className="fixed bottom-8 right-8 z-20">
+        <div className="fixed bottom-14 right-8 z-20 sm:bottom-8">
           <Link
             href="/Result"
             aria-label="Proceed"
@@ -278,7 +281,7 @@ const Testing = () => {
           </Link>
         </div>
       )}
-    </main>
+    </div>
   );
 };
 

@@ -118,10 +118,10 @@ const Summary = () => {
           <div
             role="img"
             aria-label={`${activeRace?.race} confidence: ${activeRace?.confidence} percent`}
-            className="absolute inset-x-4 bottom-4 top-20 grid place-items-center"
+            className="confidence-ring-slot absolute inset-x-4 bottom-4 top-20 grid place-items-center"
           >
             <div
-              className="relative aspect-square w-full max-w-96 rounded-full p-[6px]"
+              className="confidence-ring relative rounded-full p-[6px]"
               style={{
                 background: `conic-gradient(#1a1b1c 0 ${activeRace?.confidence}%, #d6d6d6 ${activeRace?.confidence}% 100%)`,
               }}

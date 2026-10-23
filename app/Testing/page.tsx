@@ -3,14 +3,16 @@ import Testing from "../../src/components/Testing";
 
 export default function Home() {
   return (
-    <main className="relative h-[calc(100dvh-100px)] overflow-hidden bg-background">
-      <header className="w-full shrink-0 px-4 py-6 sm:px-6">
+    <main className="relative flex h-dvh min-h-0 flex-col overflow-hidden bg-background">
+      <header className="w-full shrink-0 px-4 pt-4 sm:px-6 sm:pt-6">
         <Header />
       </header>
 
-      <p className="px-12 pb-2 text-xs font-semibold">TO START ANALYSIS</p>
+      <p className="shrink-0 px-4 pb-2 text-xs font-semibold sm:px-6">
+        TO START ANALYSIS
+      </p>
 
-      <section className="w-full min-h-0 flex-1 overflow-x-hidden">
+      <section className="relative min-h-0 w-full flex-1 overflow-hidden">
         <Testing />
       </section>
     </main>
