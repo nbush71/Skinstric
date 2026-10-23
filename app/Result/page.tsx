@@ -8,7 +8,7 @@ export default function Home() {
         <Header />
       </header>
 
-      <p className="shrink-0 px-4 pb-2 text-xs font-semibold sm:px-6">
+      <p className="shrink-0 ml-6 px-4 pb-2 text-xs font-semibold sm:px-6">
         TO START ANALYSIS
       </p>
 
