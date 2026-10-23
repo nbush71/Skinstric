@@ -25,7 +25,7 @@ const Select = () => {
 
   return (
     <>
-      <div className="fixed bottom-8 left-8 z-20">
+      <div className="fixed bottom-[15vh] left-8 z-20 md:bottom-8">
         <a href="/Result" aria-label="Back to image analysis" className="group flex items-center gap-6">
           <div className="flex h-12 w-12 rotate-45 items-center justify-center border border-[#1A1B1C] transition-transform duration-300 group-hover:scale-110">
             <span className="-rotate-45 text-[9px] font-bold tracking-wide md:hidden">
@@ -36,11 +36,14 @@ const Select = () => {
           <span className="hidden text-sm font-semibold md:inline">BACK</span>
         </a>
       </div>
-      <div className="fixed bottom-8 right-8 z-20">
+      <div className="fixed bottom-[15vh] right-8 z-20 md:bottom-8">
         <a href="/Summary" aria-label="Get summary" className="group flex items-center gap-6">
-          <span className="text-sm font-semibold">GET SUMMARY</span>
+          <span className="hidden text-sm font-semibold md:inline">GET SUMMARY</span>
           <div className="flex h-12 w-12 rotate-45 items-center justify-center border border-[#1A1B1C] transition-transform duration-300 group-hover:scale-110">
-            <span className="-rotate-45 text-xs">▶</span>
+            <span className="-rotate-45 text-[9px] font-bold tracking-wide md:hidden">
+              SUM
+            </span>
+            <span className="hidden -rotate-45 text-xs md:inline">▶</span>
           </div>
         </a>
       </div>
@@ -51,7 +54,7 @@ const Select = () => {
       </div>
 
       <div className="flex h-[68.3vh] items-center justify-center bg-background">
-        <div className="relative grid aspect-square w-[72vw] max-w-[342px] grid-cols-3 grid-rows-3 place-items-center">
+        <div className="relative grid aspect-square w-[72vw] max-w-[342px] -translate-y-6 grid-cols-3 grid-rows-3 place-items-center md:translate-y-0">
           <HoverDiamond activeTile={activeTile} />
           <div
             className="relative z-10 col-start-2 row-start-1 flex items-center justify-center"
