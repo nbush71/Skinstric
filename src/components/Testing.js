@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from "react";
+import Link from "next/link";
 
 const Testing = () => {
   const [step, setStep] = useState("name");
@@ -252,8 +253,8 @@ const Testing = () => {
 
       {/* Back button */}
       <div className="fixed bottom-8 left-8 z-20">
-        <a href="/" aria-label="Back" className="group flex items-center gap-6">
-          <div className="w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 transition-transform duration-300 group-hover:scale-110">
+        <a href="/" aria-label="Back" className="group flex items-center gap-6 whitespace-nowrap">
+          <div className="flex h-12 w-12 shrink-0 rotate-45 items-center justify-center border border-[#1A1B1C] transition-transform duration-300 group-hover:scale-110">
             <span className="-rotate-45 text-xs">◀</span>
           </div>
 
@@ -261,19 +262,20 @@ const Testing = () => {
         </a>
       </div>
 
+      {/** Proceed button for the complete step */}
       {step === "complete" && (
         <div className="fixed bottom-8 right-8 z-20">
-          <button
-            type="button"
+          <Link
+            href="/Result"
             aria-label="Proceed"
-            className="group flex items-center gap-6"
+            className="group flex items-center gap-6 whitespace-nowrap"
           >
             <span className="text-sm font-semibold">PROCEED</span>
 
-            <div className="w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 transition-transform duration-300 group-hover:scale-110">
+            <div className="flex h-12 w-12 shrink-0 rotate-45 items-center justify-center border border-[#1A1B1C] transition-transform duration-300 group-hover:scale-110">
               <span className="-rotate-45 text-xs">▶</span>
             </div>
-          </button>
+          </Link>
         </div>
       )}
     </main>
