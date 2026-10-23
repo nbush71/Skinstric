@@ -273,10 +273,15 @@ const Testing = () => {
             aria-label="Proceed"
             className="group flex items-center gap-6 whitespace-nowrap"
           >
-            <span className="text-sm font-semibold">PROCEED</span>
+            <span className="hidden text-sm font-semibold md:inline">
+              PROCEED
+            </span>
 
             <div className="flex h-12 w-12 shrink-0 rotate-45 items-center justify-center border border-[#1A1B1C] transition-transform duration-300 group-hover:scale-110">
-              <span className="-rotate-45 text-xs">▶</span>
+              <span className="-rotate-45 text-[9px] font-bold tracking-wide md:hidden">
+                PROCEED
+              </span>
+              <span className="hidden -rotate-45 text-xs md:inline">▶</span>
             </div>
           </Link>
         </div>
