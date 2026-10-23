@@ -21,7 +21,7 @@ const MainHeading = () => {
         {/* Main heading content */}
         <div
           id="main-heading-inner"
-          className={`relative z-10 text-center transition-transform duration-700 ease-in-out ${
+          className={`main-heading-reveal relative z-10 text-center transition-transform duration-500 ease-in-out ${
             isTakeTestHovered
               ? "xl:translate-x-[-18vw] xl:text-left"
               : isDiscoverActive

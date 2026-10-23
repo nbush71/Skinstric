@@ -19,6 +19,19 @@ body {
   font-family: var(--font-roobert-trial), Arial, Helvetica, sans-serif;
 }
 
+.main-heading-reveal {
+  animation: revealMainHeading 300ms ease-in both;
+}
+
+@keyframes revealMainHeading {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @theme inline {
   --color-zinc-50: #f9f9f9;
   --color-brand-bg-Buttons: #1A1B1C;
