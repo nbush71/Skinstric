@@ -20,7 +20,7 @@ body {
 }
 
 .main-heading-reveal {
-  animation: revealMainHeading 300ms ease-in both;
+  animation: revealMainHeading 150ms ease-in-out both;
 }
 
 @keyframes revealMainHeading {
