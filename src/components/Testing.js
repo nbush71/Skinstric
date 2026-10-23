@@ -7,7 +7,6 @@ const Testing = () => {
   const [step, setStep] = useState("name");
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [validationError, setValidationError] = useState("");
 
@@ -107,7 +106,6 @@ const Testing = () => {
         throw new Error("The server response did not include a success message.");
       }
 
-      setSuccessMessage(message);
       setStep("complete");
     } catch (error) {
       setErrorMessage(
@@ -224,14 +222,16 @@ const Testing = () => {
           )}
 
           {step === "complete" && (
-            <>
-              <p role="status" aria-live="polite" className="text-xl text-brand-text-dark text-center">
-                {successMessage}
-              </p>
-              <p className="mt-2 text-xl text-brand-text-dark text-center">
-                Thank You! <br /> <span className="text-brand-input-text">Proceed to the next step</span>
-              </p>
-            </>
+            <p
+              role="status"
+              aria-live="polite"
+              className="text-xl text-brand-text-dark text-center"
+            >
+              Thank You! <br />{" "}
+              <span className="text-brand-input-text">
+                Proceed to the next step
+              </span>
+            </p>
           )}
 
           {step === "error" && (

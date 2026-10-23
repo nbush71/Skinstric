@@ -68,7 +68,7 @@ const Camera = () => {
       type="button"
       onClick={handleBack}
       aria-label="Back"
-      className="group flex items-center gap-6 whitespace-nowrap"
+      className="group flex items-center ml-6 gap-6 whitespace-nowrap"
     >
       <div className="flex h-12 w-12 shrink-0 rotate-45 items-center justify-center border border-white transition-transform duration-300 group-hover:scale-110">
         <span className="-rotate-45 text-[9px] font-bold tracking-wide sm:hidden">
@@ -228,12 +228,12 @@ const Camera = () => {
             </section>
           )}
 
-          <div className="absolute bottom-8 ml-6 left-8 z-20 hidden sm:block">
+          <div className="absolute bottom-8 pl-6 left-8 z-20 hidden sm:block">
             {backButton}
           </div>
 
           {photo && (
-            <div className="absolute bottom-8 left-4 z-20 sm:hidden">
+            <div className="absolute bottom-8 pl-6 left-4 z-20 sm:hidden">
               {backButton}
             </div>
           )}
